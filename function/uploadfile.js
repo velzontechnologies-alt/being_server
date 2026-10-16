@@ -7,7 +7,7 @@ const path = require("path");
 
 // DigitalOcean Spaces Client
 const spacesClient = new S3Client({
-  region: process.env.AWS_REGION,
+  region: process.env.S3_REGION,
   endpoint: process.env.S3_ENDPOINT,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
