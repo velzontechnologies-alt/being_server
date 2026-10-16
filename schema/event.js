@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const eventSchema = new mongoose.Schema({
   admin_id: {
-    type:String,
+    type: mongoose.Schema.Types.ObjectId,
   },
   title: {
     type: String,
@@ -34,5 +34,5 @@ const eventSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
 module.exports = mongoose.model("Event", eventSchema);
+

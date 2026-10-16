@@ -1,7 +1,7 @@
 const User_ = require("../schema/user");
 
 class User {
-  async create({ email, name, phone_number, description,support_with,interested_in }) {
+  async create({ email, name, phone_number, description,support_with,interested_in,source_about_us }) {
     try {
       const result = await new User_({
         email: email,
@@ -9,7 +9,8 @@ class User {
         phone_number: phone_number,
         description: description,
         interested_in:interested_in,
-        support_with:support_with
+        support_with:support_with,
+        source_about_us:source_about_us
       }).save();
 
       return result;

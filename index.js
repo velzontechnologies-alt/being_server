@@ -23,8 +23,9 @@ const Admin = require('./router/admin');
 const Event = require('./router/event');
 const Gallery = require('./router/gallery');
 const User = require('./router/user');
-const Image = require('./router/image');
-
+const Program = require('./router/program');
+const Form =require('./router/form')
+const Review =require('./router/review')
 
 
 
@@ -32,13 +33,15 @@ const Image = require('./router/image');
 app.use('/admin', Admin);
 app.use('/gallery',Gallery);
 app.use('/event', Event);
-app.use('/image', Image);
+app.use('/program', Program);
 app.use('/user', User);
+app.use('/form',Form)
+app.use('/review',Review)
 
 // ✅ Root route
 app.get("/", (req, res) => {
 console.log("server on")
-  res.send("AI Agent API running ✅");
+  res.send("being & beyond server running ✅");
 });
 
 

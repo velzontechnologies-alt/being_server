@@ -7,18 +7,19 @@ const path = require("path");
 
 // DigitalOcean Spaces Client
 const spacesClient = new S3Client({
-  endpoint: "https://sgp1.digitaloceanspaces.com",   //process.env.DO_SPACES_ENDPOINT,
-  region: "sgp1" ,//process.env.DO_SPACES_REGION,
+  region: "sfo3",
+  endpoint: "https://sfo3.digitaloceanspaces.com/",
   credentials: {
-    accessKeyId: "PXYNBVQM66Y637OVRTBR",                              //process.env.DO_SPACES_KEY,
-    secretAccessKey: process.env.SECRET,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
+
 
 const upload = multer({
   storage: multerS3({
     s3: spacesClient,
-    bucket: "mindvision",                       //bucket name
+    bucket: "uaretech",                       //bucket name
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: "public-read",
 
@@ -32,6 +33,7 @@ const upload = multer({
       cb(null, file.originalname);
     },
   }),
+
 
   fileFilter: function (req, file, callback) {
     try {
@@ -65,10 +67,13 @@ const upload = multer({
         ext !== ".gif" &&
         ext !== ".bmp" &&
         ext !== ".html" &&
+        ext !== ".webp" &&
+        ext !== ".jfif" &&
         ext !== ".webm"
       ) {
         return callback(new Error("Unsupported file format"));
       }
+
 
       callback(null, true);
     } catch (error) {

@@ -136,10 +136,10 @@ router.post("/details", authorization ,async (req, res, next) => {
 });
 
 // Delete User
-router.post("/delete",authorization,async (req, res, next) => {
+router.post("/delete",async (req, res, next) => {
     try {
-
-        const result = await Admin.delete({ id:req.admin_id});
+console.log(req.admin_id)
+        const result = await Admin.delete({ id:req.body._id});
 
         res.status(200).json({
             success: true,
