@@ -8,7 +8,7 @@ const path = require("path");
 // DigitalOcean Spaces Client
 const spacesClient = new S3Client({
   region: process.env.S3_REGION || "sgp1", // Default region if not specified
-  endpoint: process.env.S3_ENDPOINT || "https://sgp1.digitaloceanspaces.com/", // Default endpoint if not specified
+  endpoint: `https://${process.env.S3_REGION}.digitaloceanspaces.com`, // Default endpoint if not specified
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
