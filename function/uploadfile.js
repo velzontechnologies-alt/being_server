@@ -7,8 +7,8 @@ const path = require("path");
 
 // DigitalOcean Spaces Client
 const spacesClient = new S3Client({
-  region: "sgp1",
-  endpoint: "https://sgp1.digitaloceanspaces.com/",
+  region: process.env.AWS_REGION,
+  endpoint: process.env.S3_ENDPOINT,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -19,7 +19,7 @@ const spacesClient = new S3Client({
 const upload = multer({
   storage: multerS3({
     s3: spacesClient,
-    bucket: "uaretech",                       //bucket name
+    bucket: process.env.BUCKET_NAME,                       //bucket name
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: "public-read",
 
