@@ -1,0 +1,80 @@
+require("dotenv").config();
+
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+const { S3Client } = require("@aws-sdk/client-s3");
+const path = require("path");
+
+// DigitalOcean Spaces Client
+const spacesClient = new S3Client({
+  endpoint: "https://sgp1.digitaloceanspaces.com",   //process.env.DO_SPACES_ENDPOINT,
+  region: "sgp1" ,//process.env.DO_SPACES_REGION,
+  credentials: {
+    accessKeyId: "PXYNBVQM66Y637OVRTBR",                              //process.env.DO_SPACES_KEY,
+    secretAccessKey: process.env.SECRET,
+  },
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3: spacesClient,
+    bucket: "mindvision",                       //bucket name
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: "public-read",
+
+    metadata: async (req, file, cb) => {
+      cb(null, {
+        fieldname: file.fieldname,
+      });
+    },
+
+    key: async (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  }),
+
+  fileFilter: function (req, file, callback) {
+    try {
+      const ext = path.extname(file.originalname).toLowerCase();
+      req.extension = ext;
+
+      if (
+        ext !== ".png" &&
+        ext !== ".jpg" &&
+        ext !== ".jpeg" &&
+        ext !== ".pdf" &&
+        ext !== ".mp4" &&
+        ext !== ".mp3" &&
+        ext !== ".aac" &&
+        ext !== ".amr" &&
+        ext !== ".wav" &&
+        ext !== ".ogg" &&
+        ext !== ".mov" &&
+        ext !== ".avi" &&
+        ext !== ".mkv" &&
+        ext !== ".doc" &&
+        ext !== ".docx" &&
+        ext !== ".xls" &&
+        ext !== ".xlsx" &&
+        ext !== ".ppt" &&
+        ext !== ".pptx" &&
+        ext !== ".txt" &&
+        ext !== ".rtf" &&
+        ext !== ".csv" &&
+        ext !== ".key" &&
+        ext !== ".gif" &&
+        ext !== ".bmp" &&
+        ext !== ".html" &&
+        ext !== ".webm"
+      ) {
+        return callback(new Error("Unsupported file format"));
+      }
+
+      callback(null, true);
+    } catch (error) {
+      callback(error);
+    }
+  },
+}).single("file");
+
+module.exports = upload;
