@@ -14,6 +14,7 @@ const spacesClient = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
+console.log("spacesClient", spacesClient);
 
 
 const upload = multer({
