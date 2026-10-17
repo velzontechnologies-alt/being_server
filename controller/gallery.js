@@ -142,6 +142,28 @@ class Gallery {
     }
   }
 
+  async removeSubImage({admin_id,_id,sub_image}){
+    try {
+      const result = await Gallery_.findOneAndUpdate(
+        { admin_id: admin_id, _id: _id },
+        {
+          $pull:
+          {
+            sub_image: sub_image,
+  
+  
+          }
+        },
+        { new: true }
+      );
+      return result;
+    }
+    catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
 }
 
 module.exports = Gallery;

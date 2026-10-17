@@ -152,4 +152,25 @@ router.post("/delete", authorization, async (req, res, next) => {
   }
 });
 
+//sub _ image remove
+router.post("/remove/sub/image", authorization, async (req, res, next) => {
+  try {
+ 
+ 
+    const result = await Gallery.removeSubImage({
+      admin_id: req.admin_id,
+      _id: req.body._id,
+      sub_image: req.body.sub_image
+    });
+ 
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+ 
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
